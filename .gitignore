@@ -1,0 +1,13 @@
+# Kết quả biên dịch .NET
+bin/
+obj/
+*.user
+*.suo
+
+# Thư mục làm việc của trình soạn thảo
+.vs/
+.vscode/
+.idea/
+
+# Trạng thái phiên làm việc của công cụ trợ lý
+.remember/

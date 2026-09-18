@@ -1,0 +1,208 @@
+@page
+@model IndexModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ứng dụng minh hoạ SQL nâng cao trên lược đồ University</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+
+<header class="thanh-tren">
+    <div class="nhan-hieu">
+        <span class="bieu-tuong">◱</span>
+        <div>
+            <h1>Ứng dụng minh hoạ SQL nâng cao</h1>
+            <p>Truy vấn đệ quy · Thủ tục và hàm · SQL động · SQL nhúng</p>
+        </div>
+    </div>
+    <div class="huy-hieu">
+        <span>SQL Server 2025</span>
+        <span>ASP.NET Core · ADO.NET</span>
+        <span>Lược đồ University</span>
+    </div>
+</header>
+
+<main>
+    <nav class="dai-the" role="tablist">
+        <button class="the" data-tab="cay" role="tab" aria-selected="true">
+            <span class="the-bieu-tuong">⑂</span>
+            <span class="the-ten">Cây môn tiên quyết</span>
+            <span class="the-ky-thuat">Thủ tục lưu trữ · CTE đệ quy · tham số ra</span>
+        </button>
+        <button class="the" data-tab="tinchi" role="tab" aria-selected="false">
+            <span class="the-bieu-tuong">∑</span>
+            <span class="the-ten">Khối lượng tín chỉ</span>
+            <span class="the-ky-thuat">Hàm vô hướng · hàm trả về bảng</span>
+        </button>
+        <button class="the" data-tab="tracuu" role="tab" aria-selected="false">
+            <span class="the-bieu-tuong">⌕</span>
+            <span class="the-ten">Tra cứu sinh viên</span>
+            <span class="the-ky-thuat">SQL động · sp_executesql</span>
+        </button>
+        <button class="the" data-tab="dangky" role="tab" aria-selected="false">
+            <span class="the-bieu-tuong">✎</span>
+            <span class="the-ten">Đăng ký học phần</span>
+            <span class="the-ky-thuat">SQL nhúng · giao dịch</span>
+        </button>
+    </nav>
+
+    <!-- ============================ Tab 1 ============================ -->
+    <section class="bang" id="tab-cay">
+        <h2>Cây môn tiên quyết bắc cầu</h2>
+        <p class="dan-nhap">
+            Chọn một môn học để xem toàn bộ môn tiên quyết trực tiếp và gián tiếp.
+            Quan hệ <code>prereq</code> có chu trình, nên truy vấn đệ quy mang theo
+            cột đường đi để chặn vòng lặp.
+        </p>
+
+        <div class="o-loi"></div>
+
+        <div class="hang-dieu-khien">
+            <label>
+                <span>Môn học</span>
+                <select id="cay-mon"></select>
+            </label>
+            <label class="hep">
+                <span>Mức tối đa</span>
+                <input type="number" id="cay-muc" value="5" min="1" max="10" />
+            </label>
+            <button class="nut-chinh" id="cay-chay">Tra cứu</button>
+        </div>
+
+        <pre class="khoi-ma" id="cay-sql"></pre>
+
+        <div class="hang-so-lieu" id="cay-so-lieu"></div>
+        <div id="cay-ket-qua"></div>
+    </section>
+
+    <!-- ============================ Tab 2 ============================ -->
+    <section class="bang an" id="tab-tinchi">
+        <h2>Khối lượng tín chỉ phải tích luỹ</h2>
+        <p class="dan-nhap">
+            Tổng tín chỉ để hoàn thành một môn, gồm tín chỉ của chính môn đó cộng
+            tín chỉ của toàn bộ môn tiên quyết bắc cầu. Hàm vô hướng
+            <code>fn_GetTotalCredits</code> gọi được ngay trong mệnh đề SELECT.
+        </p>
+
+        <div class="o-loi"></div>
+
+        <div class="hang-dieu-khien">
+            <label>
+                <span>Môn học</span>
+                <select id="tc-mon"></select>
+            </label>
+            <button class="nut-chinh" id="tc-chay">Tính tín chỉ</button>
+        </div>
+
+        <pre class="khoi-ma" id="tc-sql"></pre>
+        <div id="tc-ket-qua"></div>
+    </section>
+
+    <!-- ============================ Tab 3 ============================ -->
+    <section class="bang an" id="tab-tracuu">
+        <h2>Tra cứu sinh viên theo nhiều tiêu chí</h2>
+        <p class="dan-nhap">
+            Bỏ trống tiêu chí nào thì mệnh đề <code>WHERE</code> không sinh điều kiện
+            tương ứng. Khối mã bên dưới là chuỗi lệnh mà thủ tục đã dựng và trả về
+            qua tham số đầu ra.
+        </p>
+
+        <div class="o-loi"></div>
+
+        <div class="hang-dieu-khien">
+            <label>
+                <span>Tên sinh viên</span>
+                <input type="text" id="tc-ten" placeholder="một phần của tên" />
+            </label>
+            <label>
+                <span>Khoa</span>
+                <select id="tc-khoa"><option value="">(tất cả)</option></select>
+            </label>
+            <label class="hep">
+                <span>Tín chỉ tối thiểu</span>
+                <input type="number" id="tc-tinchi" min="0" max="200" />
+            </label>
+            <label class="hep">
+                <span>Sắp xếp</span>
+                <select id="tc-sapxep">
+                    <option value="ID">Mã số</option>
+                    <option value="name">Tên</option>
+                    <option value="tot_cred">Tín chỉ giảm dần</option>
+                    <option value="dept">Khoa</option>
+                </select>
+            </label>
+            <button class="nut-chinh" id="tracuu-chay">Tra cứu</button>
+        </div>
+
+        <pre class="khoi-ma" id="tracuu-sql"></pre>
+        <div id="tracuu-ket-qua"></div>
+    </section>
+
+    <!-- ============================ Tab 4 ============================ -->
+    <section class="bang an" id="tab-dangky">
+        <h2>Đăng ký lớp học phần</h2>
+        <p class="dan-nhap">
+            Học kỳ Fall 2026 đang mở đăng ký. Thủ tục
+            <code>usp_EnrollStudent</code> kiểm tra môn tiên quyết và sức chứa phòng
+            trong một giao dịch; vi phạm điều kiện nào thì giao dịch bị huỷ và
+            ứng dụng nhận được lý do.
+        </p>
+
+        <div class="o-loi"></div>
+
+        <details class="khoi-them">
+            <summary>Thêm sinh viên mới</summary>
+            <p class="dan-nhap">
+                Cột văn bản của lược đồ dùng <code>nvarchar</code> và tham số phía
+                ứng dụng khai báo <code>SqlDbType.NVarChar</code>, nên họ tên nhập vào
+                đây giữ nguyên dấu tiếng Việt.
+            </p>
+            <div class="hang-dieu-khien">
+                <label>
+                    <span>Họ và tên</span>
+                    <input type="text" id="sv-ten" placeholder="Nguyễn Thị Tuyết Nhung" />
+                </label>
+                <label>
+                    <span>Khoa</span>
+                    <select id="sv-khoa"></select>
+                </label>
+                <label class="hep">
+                    <span>Tín chỉ đã có</span>
+                    <input type="number" id="sv-tinchi" value="0" min="0" max="200" />
+                </label>
+                <button class="nut-phu" id="sv-them">Thêm sinh viên</button>
+            </div>
+            <div id="sv-thong-bao"></div>
+        </details>
+
+        <div class="hang-dieu-khien">
+            <label>
+                <span>Sinh viên</span>
+                <select id="dk-sinhvien"></select>
+            </label>
+            <label>
+                <span>Lớp học phần</span>
+                <select id="dk-lop"></select>
+            </label>
+            <button class="nut-phu" id="dk-kiemtra">Đối chiếu điều kiện</button>
+            <button class="nut-chinh" id="dk-dangky">Đăng ký</button>
+        </div>
+
+        <div id="dk-thong-bao"></div>
+        <pre class="khoi-ma" id="dk-sql"></pre>
+        <div id="dk-dieu-kien"></div>
+
+        <h3>Lớp đã đăng ký trong học kỳ</h3>
+        <div id="dk-da-dang-ky"></div>
+    </section>
+</main>
+
+<script src="~/js/app.js" asp-append-version="true"></script>
+</body>
+</html>
