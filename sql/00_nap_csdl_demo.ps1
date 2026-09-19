@@ -5,7 +5,7 @@
 # largeRelationsInsertFile.sql có hơn ba vạn dòng, phải nạp bằng sqlcmd.
 #
 # Cách chạy:  pwsh sql\00_nap_csdl_demo.ps1 [-Server <máy chủ>]
-#   Máy chỉ có instance SQLEXPRESS và SQL Browser tắt:  -Server 'lpc:.\SQLEXPRESS'
+#   Mặc định nối tới instance .\SQLEXPRESS; instance mặc định thì -Server 'localhost'.
 # =============================================================================
 
 param([string]$Server = '.\SQLEXPRESS')
