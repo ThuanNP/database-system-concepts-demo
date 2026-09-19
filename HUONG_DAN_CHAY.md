@@ -68,13 +68,13 @@ dụng, nên không phải sửa `appsettings.json`.
 
 Trên máy có nhiều instance, `localhost` trỏ tới instance mặc định chứ không
 phải `SQLEXPRESS`. Chọn nhầm thì ứng dụng nối được tới máy chủ nhưng báo không
-mở được cơ sở dữ liệu `demo`.
+mở được cơ sở dữ liệu `univdb`.
 
 ## Tham số của chay.ps1
 
 | Tham số | Tác dụng |
 |---|---|
-| `-Nap` | dựng lại cơ sở dữ liệu `demo` từ đầu rồi chạy |
+| `-Nap` | dựng lại cơ sở dữ liệu `univdb` từ đầu rồi chạy |
 | `-DatLai` | đưa dữ liệu học kỳ về trạng thái đầu rồi chạy |
 | `-May <máy chủ>` | chỉ định máy chủ SQL Server |
 | `-Cong <số>` | đổi cổng, chẳng hạn `-Cong 5090` khi 5080 đang bận |
@@ -136,7 +136,7 @@ viên mẫu.
 
 ## Đối chiếu trạng thái đúng
 
-Chạy trên cơ sở dữ liệu `demo` để kiểm tra trước buổi trình chiếu:
+Chạy trên cơ sở dữ liệu `univdb` để kiểm tra trước buổi trình chiếu:
 
 ```sql
 SELECT (SELECT COUNT(*) FROM course)  AS mon,
@@ -162,8 +162,8 @@ nhóm 2 đã dùng đủ 10 chỗ.
 chưa mở ứng dụng:
 
 ```powershell
-pwsh sql\00_nap_csdl_demo.ps1                       # instance .\SQLEXPRESS
-pwsh sql\00_nap_csdl_demo.ps1 -Server 'localhost'   # instance mặc định
+pwsh sql\00_nap_univdb.ps1                       # instance .\SQLEXPRESS
+pwsh sql\00_nap_univdb.ps1 -Server 'localhost'   # instance mặc định
 ```
 
 Kịch bản gỡ thủ tục, hàm và bảng cũ, dựng lược đồ bằng `database\DDL.sql`, nạp
@@ -175,11 +175,11 @@ học kỳ Fall 2026. Chạy được cả trên cơ sở dữ liệu trống l�
 **`dotnet` hoặc `sqlcmd` không phải là lệnh.** Chưa cài, hoặc đã cài nhưng chưa
 mở lại cửa sổ PowerShell. Xem mục *Thành phần cần cài trước*.
 
-**Không mở được CSDL demo trên máy chủ ...** Cơ sở dữ liệu chưa dựng, chạy
+**Không mở được CSDL univdb trên máy chủ ...** Cơ sở dữ liệu chưa dựng, chạy
 `pwsh chay.ps1 -Nap`. Nếu máy chủ mang tên khác, xem mục *Máy chủ SQL Server
 mang tên khác*.
 
-**CSDL demo có nhưng thiếu thủ tục và hàm.** Lần dựng trước dừng giữa chừng.
+**CSDL univdb có nhưng thiếu thủ tục và hàm.** Lần dựng trước dừng giữa chừng.
 Chạy lại `pwsh chay.ps1 -Nap`.
 
 **sqlcmd báo không nhận tham số `-C`.** Tham số này bảo sqlcmd tin chứng chỉ tự

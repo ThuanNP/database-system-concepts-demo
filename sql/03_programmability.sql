@@ -1,7 +1,7 @@
 ﻿/* Thủ tục và hàm cho ứng dụng minh hoạ, trên lược đồ University.
-   Chạy trên CSDL demo, Microsoft SQL Server. */
+   Chạy trên CSDL univdb, Microsoft SQL Server. */
 
-USE demo;
+USE univdb;
 GO
 
 IF OBJECT_ID('dbo.usp_EnrollStudent',         'P')  IS NOT NULL DROP PROCEDURE dbo.usp_EnrollStudent;

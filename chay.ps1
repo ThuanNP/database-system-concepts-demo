@@ -68,19 +68,19 @@ SQL Server rồi mở lại cửa sổ PowerShell.
 }
 
 if ($Nap) {
-    Write-Host "==> Dựng CSDL demo trên $May (mất vài phút vì tệp dữ liệu hơn ba vạn dòng)"
-    & (Join-Path $goc 'sql\00_nap_csdl_demo.ps1') -Server $May
+    Write-Host "==> Dựng CSDL univdb trên $May (mất vài phút vì tệp dữ liệu hơn ba vạn dòng)"
+    & (Join-Path $goc 'sql\00_nap_univdb.ps1') -Server $May
 }
 
 # Soát trước khi chạy: nối được CSDL và đủ năm thủ tục, hàm. Thiếu thì báo ngay,
 # thay vì để ứng dụng mở lên rồi mọi trang đều báo lỗi.
-$soat = ChaySqlcmd @('-d', 'demo', '-h', '-1', '-W', '-Q',
+$soat = ChaySqlcmd @('-d', 'univdb', '-h', '-1', '-W', '-Q',
     "SET NOCOUNT ON; SELECT COUNT(*) FROM sys.objects WHERE type IN ('P','FN','IF') AND is_ms_shipped = 0;")
 $dem = $soat.KetQua
 
 if ($soat.Ma -ne 0) {
     Dung @"
-Không mở được CSDL demo trên máy chủ '$May'.
+Không mở được CSDL univdb trên máy chủ '$May'.
     $($dem.Trim())
 
 Lần đầu chạy trên máy này thì dựng CSDL trước:
@@ -94,7 +94,7 @@ Tên 'MSSQLSERVER' ứng với -May 'localhost'; tên 'MSSQL`$ABC' ứng với -
 
 if ($dem.Trim() -ne '5') {
     Dung @"
-CSDL demo có nhưng thiếu thủ tục và hàm (đếm được $($dem.Trim()), cần 5).
+CSDL univdb có nhưng thiếu thủ tục và hàm (đếm được $($dem.Trim()), cần 5).
 Dựng lại bằng:
     pwsh chay.ps1 -Nap -May '$May'
 "@
@@ -102,14 +102,14 @@ Dựng lại bằng:
 
 if ($DatLai) {
     Write-Host '==> Đặt lại dữ liệu học kỳ Fall 2026'
-    $dat = ChaySqlcmd @('-d', 'demo', '-f', '65001', '-b', '-i', (Join-Path $goc 'sql\04_hoc_ky_moi.sql'))
+    $dat = ChaySqlcmd @('-d', 'univdb', '-f', '65001', '-b', '-i', (Join-Path $goc 'sql\04_hoc_ky_moi.sql'))
     if ($dat.Ma -ne 0) { Dung "Không đặt lại được dữ liệu.`n$($dat.KetQua.Trim())" }
 }
 
-# Biến môi trường này đè lên ConnectionStrings:Demo trong appsettings.json, nên
+# Biến môi trường này đè lên ConnectionStrings:UnivDb trong appsettings.json, nên
 # tham số -May áp được cho ứng dụng mà không phải sửa tệp cấu hình.
-$env:ConnectionStrings__Demo =
-    "Server=$May;Database=demo;Integrated Security=True;TrustServerCertificate=True;Application Name=UnivSqlDemo"
+$env:ConnectionStrings__UnivDb =
+    "Server=$May;Database=univdb;Integrated Security=True;TrustServerCertificate=True;Application Name=UnivSqlDemo"
 
 Write-Host ''
 Write-Host "==> Mở http://localhost:$Cong trong trình duyệt. Dừng bằng Ctrl+C."

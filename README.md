@@ -10,7 +10,7 @@ Cần .NET SDK 10, Microsoft SQL Server (bản Express đủ dùng) và `sqlcmd`
 pwsh chay.ps1 -Nap
 ```
 
-Lệnh này dựng cơ sở dữ liệu `demo` rồi chạy ứng dụng ở http://localhost:5080.
+Lệnh này dựng cơ sở dữ liệu `univdb` rồi chạy ứng dụng ở http://localhost:5080.
 Lần đầu mất vài phút. Những lần sau bỏ `-Nap`.
 
 Máy chủ SQL Server không mang tên `.\SQLEXPRESS` thì chỉ rõ bằng tham số `-May`,
@@ -57,7 +57,7 @@ database/
   largeRelationsInsertFile.sql  dữ liệu lớn: 200 môn, 2000 sinh viên, 30000 lượt học
   smallRelationsInsertFile.sql  dữ liệu nhỏ, dễ đọc trên màn chiếu
 sql/
-  00_nap_csdl_demo.ps1          dựng lại toàn bộ CSDL demo
+  00_nap_univdb.ps1             dựng lại toàn bộ CSDL univdb
   03_programmability.sql        năm thủ tục và hàm của ứng dụng
   04_hoc_ky_moi.sql             học kỳ Fall 2026 và ba lớp học phần
 chay.ps1                        chạy ứng dụng, kèm tham số -DatLai

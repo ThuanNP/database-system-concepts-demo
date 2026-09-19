@@ -1,10 +1,10 @@
 ﻿# =============================================================================
-# Khởi tạo lại CSDL demo, chạy được cả khi CSDL chưa tồn tại.
+# Khởi tạo lại CSDL univdb, chạy được cả khi CSDL chưa tồn tại.
 #
 # Lược đồ và dữ liệu lấy thẳng từ database\ nên không nhân bản tệp; riêng
 # largeRelationsInsertFile.sql có hơn ba vạn dòng, phải nạp bằng sqlcmd.
 #
-# Cách chạy:  pwsh sql\00_nap_csdl_demo.ps1 [-Server <máy chủ>]
+# Cách chạy:  pwsh sql\00_nap_univdb.ps1 [-Server <máy chủ>]
 #   Mặc định nối tới instance .\SQLEXPRESS; instance mặc định thì -Server 'localhost'.
 # =============================================================================
 
@@ -13,7 +13,7 @@ param([string]$Server = '.\SQLEXPRESS')
 $ErrorActionPreference = 'Stop'
 
 $root = Split-Path -Parent $PSScriptRoot
-$db   = 'demo'
+$db   = 'univdb'
 
 # ODBC Driver 18 mặc định mã hoá kết nối; -C tin chứng chỉ tự ký của máy chủ cục bộ.
 function Sql([string]$csdl, [string[]]$thamSo) {

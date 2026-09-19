@@ -11,7 +11,7 @@
    Mọi chuỗi tiếng Việt mang tiền tố N. Thiếu tiền tố đó, chuỗi bị diễn dịch
    theo collation mặc định của CSDL trước khi ghi vào cột và mất dấu. */
 
-USE demo;
+USE univdb;
 GO
 
 /* Thứ tự xoá đi ngược với thứ tự tham chiếu khoá ngoại. */

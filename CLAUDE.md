@@ -6,9 +6,9 @@ bằng `winget install --id Microsoft.DotNet.SDK.10 --exact`, kèm runtime
 (`dotnet run --project UnivSqlDemo.Web --urls http://localhost:5080`).
 `appsettings.json` trỏ `Server=.\SQLEXPRESS`. Đừng đổi về `localhost`: từ bản cập nhật SQL Server
 ngày 2026-09-19, máy có thêm instance mặc định `MSSQLSERVER` và `localhost` trỏ tới đó, nơi không
-có CSDL `demo`. Dùng instance khác thì ghi đè bằng biến môi trường `ConnectionStrings__Demo`,
+có CSDL `univdb`. Dùng instance khác thì ghi đè bằng biến môi trường `ConnectionStrings__UnivDb`,
 chẳng hạn
-`ConnectionStrings__Demo=Server=<máy chủ>;Database=demo;Integrated Security=True;TrustServerCertificate=True`.
+`ConnectionStrings__UnivDb=Server=<máy chủ>;Database=univdb;Integrated Security=True;TrustServerCertificate=True`.
 
 Yêu cầu của đề: ứng dụng web ASP.NET Core + Microsoft SQL Server, truy cập dữ liệu bằng
 **ADO.NET** (`Microsoft.Data.SqlClient`). Chính lớp ADO.NET này là hiện thân của "SQL nhúng /
