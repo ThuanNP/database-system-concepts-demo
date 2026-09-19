@@ -77,3 +77,8 @@ này đổi các cột văn bản sang `nvarchar` và nới rộng (`name` 50, `
 `building` 30, `title` 100) để lưu được họ tên tiếng Việt đầy đủ; ngoài bốn kiểu
 cột đó, tệp giữ nguyên từng dòng của bản gốc. `largeRelationsInsertFile.sql`
 trùng từng byte với bản gốc, và bản này giống nhau ở cả ấn bản 6 lẫn ấn bản 7.
+
+Phép so byte áp cho nội dung lưu trong kho. Trên Windows, Git thường đặt
+`core.autocrlf=true` và đổi ký tự xuống dòng lúc checkout, nên tệp trên đĩa có
+mã băm khác. Đối chiếu bằng `git show HEAD:database/largeRelationsInsertFile.sql`
+thay vì đọc thẳng tệp.
