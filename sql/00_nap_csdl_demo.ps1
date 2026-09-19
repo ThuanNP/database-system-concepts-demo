@@ -1,4 +1,4 @@
-# =============================================================================
+﻿# =============================================================================
 # Khởi tạo lại CSDL demo, chạy được cả khi CSDL chưa tồn tại.
 #
 # Lược đồ và dữ liệu lấy thẳng từ database\ nên không nhân bản tệp; riêng
@@ -8,7 +8,7 @@
 #   Máy chỉ có instance SQLEXPRESS và SQL Browser tắt:  -Server 'lpc:.\SQLEXPRESS'
 # =============================================================================
 
-param([string]$Server = 'localhost')
+param([string]$Server = '.\SQLEXPRESS')
 
 $ErrorActionPreference = 'Stop'
 

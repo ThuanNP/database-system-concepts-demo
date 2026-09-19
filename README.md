@@ -2,20 +2,22 @@
 
 Ứng dụng web trên lược đồ University, dùng cho phần demo của tiểu luận.
 
-Cách chạy, kịch bản trình chiếu và xử lý sự cố: xem
-[HUONG_DAN_CHAY.md](HUONG_DAN_CHAY.md).
-
 ## Bắt đầu nhanh
 
-Cần .NET SDK 10 và một máy chủ Microsoft SQL Server cho đăng nhập Windows.
+Cần .NET SDK 10, Microsoft SQL Server (bản Express đủ dùng) và `sqlcmd`.
 
 ```powershell
-pwsh sql\00_nap_csdl_demo.ps1   # dựng CSDL demo: lược đồ, dữ liệu, thủ tục, hàm
-pwsh chay.ps1                   # chạy ứng dụng, mở http://localhost:5080
+pwsh chay.ps1 -Nap
 ```
 
-Máy chỉ có instance SQLEXPRESS và tắt SQL Browser thì thêm tham số
-`-Server 'lpc:.\SQLEXPRESS'` cho bước dựng CSDL.
+Lệnh này dựng cơ sở dữ liệu `demo` rồi chạy ứng dụng ở http://localhost:5080.
+Lần đầu mất vài phút. Những lần sau bỏ `-Nap`.
+
+Máy chủ SQL Server không mang tên `.\SQLEXPRESS` thì chỉ rõ bằng tham số `-May`,
+chẳng hạn với instance mặc định: `pwsh chay.ps1 -Nap -May 'localhost'`.
+
+Các bước cài đặt, cách xử lý sự cố và kịch bản trình chiếu nằm ở
+[HUONG_DAN_CHAY.md](HUONG_DAN_CHAY.md).
 
 ## Bốn chức năng
 
@@ -68,7 +70,10 @@ Framework. Chính tầng ADO.NET này là phần minh hoạ cho SQL nhúng trên
 
 ## Nguồn dữ liệu
 
-Lược đồ University và hai tệp dữ liệu mẫu trong `database/` lấy từ tài nguyên
-kèm giáo trình *Database System Concepts* (https://www.db-book.com/). Bản trong
-kho này đổi các cột văn bản sang `nvarchar` và nới rộng (`name` 50, `dept_name`
-40, `building` 30, `title` 100) để lưu được họ tên tiếng Việt đầy đủ.
+Lược đồ University và hai tệp dữ liệu mẫu trong `database/` lấy từ trang tài
+nguyên của giáo trình *Database System Concepts*, ấn bản 6:
+https://www.db-book.com/db6/lab-dir/sample_tables-dir/index.html. Bản trong kho
+này đổi các cột văn bản sang `nvarchar` và nới rộng (`name` 50, `dept_name` 40,
+`building` 30, `title` 100) để lưu được họ tên tiếng Việt đầy đủ; ngoài bốn kiểu
+cột đó, tệp giữ nguyên từng dòng của bản gốc. `largeRelationsInsertFile.sql`
+trùng từng byte với bản gốc, và bản này giống nhau ở cả ấn bản 6 lẫn ấn bản 7.

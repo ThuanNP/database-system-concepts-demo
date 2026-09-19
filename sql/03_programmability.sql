@@ -156,7 +156,7 @@ GO
    dùng nhập không được ghép vào chuỗi SQL.
 
    Cột dùng để sắp xếp là một định danh, mà định danh không tham số hoá được.
-   Trường hợp này đối chiếu với một danh sách trắng.
+   Trường hợp này đối chiếu với một danh sách cho phép (allowlist).
 
    Tham số @SqlSinhRa trả lại chuỗi lệnh đã dựng để giao diện hiển thị.
    ========================================================================= */
@@ -189,7 +189,7 @@ BEGIN
     IF @TinChiToiThieu IS NOT NULL
         SET @sql += NCHAR(13) + NCHAR(10) + N'   AND s.tot_cred >= @p_TinChi';
 
-    /* Danh sách trắng cho cột sắp xếp. */
+    /* Cột sắp xếp chọn từ danh sách cho phép. */
     SET @sql += NCHAR(13) + NCHAR(10) + N'ORDER BY '
              + CASE @SapXep
                    WHEN 'name'     THEN N's.name'
